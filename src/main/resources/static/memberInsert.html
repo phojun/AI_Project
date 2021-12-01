@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+main_container{ border: 0px solid;
+}
+.login_container{ width: 380px;
+ height: 700px;
+ margin: auto;
+ border-radius: 3px;
+ box-shadow: 0px 0px 20px #000;
+}
+.form_container{ width: 300px; margin: auto;
+}
+.form_title_div{ margin: auto;
+ text-align: center;
+}
+.form_title_p{ font-weight: bold;
+ font-size: 22px;
+ display: inline-block;
+ padding-top: 8px;
+}
+.form_input{ width: 98%;
+ height: 30px;
+ border: 1px solid;
+ border-radius: 3px;
+ border-color: red;
+}
+	.email_alert{visibility:hidden;}
+.form_item_name{ color: gray;
+}
+.form_text_alert{ height: 20px;
+}
+.form_text_alert_padding{ padding-bottom: 10px;
+}
+.form_submit_button{ width: 100%;
+ height: 44px;
+ background-color: rgb(83, 154, 236);
+ border: 1px;
+ border-radius: 3px;
+ color: white;
+ font-size: 17px;
+ font-weight: 500;
+}
+
+</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+			$(document).ready(function(){
+				$("#email").focus(function(){
+					if($("#username").val().length>0){
+						$("#username").css("border-color","green");	
+					}
+				});
+				$("#pw").focus(function(){
+					var email = $("#email").val();
+					if(email.length>0){
+						$("#email").css("border-color","green");
+						if(validateEmail(email)){
+							$("#email_alert").css("visibility","hidden");
+						}else{
+							$("#email").css("border-color","red");
+							$("#email_alert").css("visibility","visible");
+							$("#email_alert").css("color","red");
+							
+							}
+						}																		
+				});
+				$("#cpw").focus(function(){
+					if($("#pw").val().length>=6){
+						$("#pw").css("border-color","green");
+						$("#pw_alert").css("color","green");
+					}else{
+						$("#pw_alert").css("color","red");
+					}
+				});
+				$(".form_submit_button").click(function(){
+					if($("#pw").val()==$("#cpw").val()){
+						$("#cpw").css("border-color","green");
+						$("#cpw_alert").css("color","green");
+						return true;
+					}else{
+						$("#cpw").focus();
+						return false;
+					}
+				});
+				function validateEmail(email) {
+					var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+					if (filter.test(email)) {
+					return true;
+					}
+					else {
+					return false;
+					}
+					}
+			});				
+	</script>
+</head>
+<body>
+	<div class="main_container login_container">
+	<form class="form_container" action="../memberInsert" method="get" >
+		<div class="form_title_div">
+		<p class="form_title_p">
+		Register With Us</div>
+		</p>
+		<div class="form_item_name">id</div>
+		<input class="form_input" id="id" name="id">
+		<div class="form_text_alert form_text_alert_padding"></div>
+		
+		<div class="form_item_name">Email</div>
+		<input class="form_input" id="email" name="email">>
+		<div class="form_text_alert form_text_alert_padding email_alert" id="email_alert" >email형식을 확인해주세요</div>
+		
+		<div class="form_item_name">Password</div>
+		<input class="form_input" id="pw" type="password" name="pw">>
+		<div class="form_text_alert form_text_alert_padding" id="pw_alert">Password must be at least 6 characters.</div>
+		
+		<div class="form_item_name">Confirm Password</div>
+		<input class="form_input" type="password" id="cpw">
+		<div class="form_text_alert form_text_alert_padding" id="cpw_alert">Password2 is required.</div>
+		
+		<div class="form_item_name">phone</div>
+		<input class="form_input" id="phone" name="phone">
+		
+		<div class="form_item_name">age</div>
+		<input class="form_input" id="age" name="age">
+		
+		<div class="form_item_name">
+      <label for="gender" >성별을 선택해주세요:</label>
+		<select name="gender" id="gender">
+    		<option value="남" >남</option>
+    		<option value="여" >여</option>
+		</select>
+		</div>
+		
+		<input type="submit" value="Submit" class="form_submit_button">
+	</form>
+	</div>
+	
+</body>
+</html>

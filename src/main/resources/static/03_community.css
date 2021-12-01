@@ -1,0 +1,27 @@
+/* 03_community.css */
+/* 아래에 코드를 작성해 주세요. */
+
+.main {
+  margin-top: 120px;
+  margin-right: 70px;
+  margin-bottom: 120px;
+  margin-left: 70px;
+}
+
+.a_style {
+  text-decoration: none;
+}
+
+h1 {
+  font-weight: bold;
+  text-align: center;
+}
+
+aside {
+  float: left;
+}
+
+section {
+  float: right;
+  width: 900px;
+}
