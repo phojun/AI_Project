@@ -17,7 +17,8 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.service.ColorBoxService;
-
+import com.example.demo.service.ObjectDetection;
+import com.example.demo.service.ObjectDetectionService;
 import com.example.demo.vo.ColorBoxVO;
 import com.example.demo.vo.MemberVO;
 
@@ -28,6 +29,12 @@ public class ColorBoxController {
 	ColorBoxService colorBoxService;
 	
 	List<ColorBoxVO> blist;
+	
+	@Autowired
+	ObjectDetection objectDetection;
+	
+	@Autowired
+	ObjectDetectionService objectDetectionService;
 	
 	@PostMapping("insertColorBox")
 	@ResponseBody
@@ -75,6 +82,43 @@ public class ColorBoxController {
 		
 		
 		return mav;
+	}
+	@PostMapping("personDetect")
+	@ResponseBody
+	public String detectPerson(MultipartFile image) {
+		System.out.println(image.getOriginalFilename());
+		JSONObject jo = new JSONObject();
+		try {
+			File uploadFile=new File("C:\\temp2\\"+image.getOriginalFilename());
+			image.transferTo(uploadFile);
+			
+			jo.put("result", objectDetection.detectPerson(uploadFile));
+			System.out.println(jo.get("result"));
+			return jo.toJSONString();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "upload fail!!!";
+		} 
+	}
+
+	 
+	     
+	@PostMapping("objectDetect")
+	@ResponseBody
+	public String objectDetection(MultipartFile image){
+		System.out.println(image.getOriginalFilename());
+		try {
+			File uploadFile=new File("C:\\temp2\\"+image.getOriginalFilename());
+			image.transferTo(uploadFile);
+			return objectDetectionService.objectDetect(uploadFile);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "upload fail!!!";
+		} 
 	}
 }
 

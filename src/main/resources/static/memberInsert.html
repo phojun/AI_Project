@@ -4,140 +4,318 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-main_container{ border: 0px solid;
-}
-.login_container{ width: 380px;
- height: 700px;
- margin: auto;
- border-radius: 3px;
- box-shadow: 0px 0px 20px #000;
-}
-.form_container{ width: 300px; margin: auto;
-}
-.form_title_div{ margin: auto;
- text-align: center;
-}
-.form_title_p{ font-weight: bold;
- font-size: 22px;
- display: inline-block;
- padding-top: 8px;
-}
-.form_input{ width: 98%;
- height: 30px;
- border: 1px solid;
- border-radius: 3px;
- border-color: red;
-}
-	.email_alert{visibility:hidden;}
-.form_item_name{ color: gray;
-}
-.form_text_alert{ height: 20px;
-}
-.form_text_alert_padding{ padding-bottom: 10px;
-}
-.form_submit_button{ width: 100%;
- height: 44px;
- background-color: rgb(83, 154, 236);
- border: 1px;
- border-radius: 3px;
- color: white;
- font-size: 17px;
- font-weight: 500;
+main_container {
+	border: 0px solid;
 }
 
+.login_container {
+	width: 380px;
+	height: 700px;
+	margin: auto;
+	border-radius: 3px;
+	box-shadow: 0px 0px 20px #000;
+}
+
+.form_container {
+	width: 300px;
+	margin: auto;
+}
+
+.form_title_div {
+	margin: auto;
+	text-align: center;
+}
+
+.form_title_p {
+	font-weight: bold;
+	font-size: 22px;
+	display: inline-block;
+	padding-top: 8px;
+}
+
+.form_input {
+	width: 98%;
+	height: 30px;
+	border: 1px solid;
+	border-radius: 3px;
+	border-color: red;
+}
+
+.email_alert {
+	visibility: visible;
+}
+
+.form_item_name {
+	color: gray;
+}
+
+.form_text_alert {
+	height: 20px;
+}
+
+.form_text_alert_padding {
+	padding-bottom: 10px;
+}
+
+.form_submit_button {
+	width: 100%;
+	height: 44px;
+	background-color: rgb(83, 154, 236);
+	border: 1px;
+	border-radius: 3px;
+	color: white;
+	font-size: 17px;
+	font-weight: 500;
+}
 </style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script type="text/javascript">
-			$(document).ready(function(){
-				$("#email").focus(function(){
-					if($("#username").val().length>0){
-						$("#username").css("border-color","green");	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$("#id").blur(function() {
+			const id = $("#id").val();
+			const idRegExp = /^[a-zA-z0-9]{6,20}$/;
+			
+			if(id==null||id==""){//id 값이 없을때
+				$("#id_check").text("-->id를 입력해주세요");
+				$("#id_check").css("visibility", "visible");
+				$("#id_check").css("color", "red");
+				$("#id").css("border-color", "red");
+				return false;
+			}else if(!idRegExp.test(id)){//id 길이가 영문자,숫자 6~20자리가 아닐때
+				$("#id_check").text("-->id는 영문,숫자 6~20자리");
+				$("#id_check").css("visibility", "visible");
+				$("#id_check").css("color", "red");
+				$("#id").css("border-color", "red");
+				return false;
+			}else{$.ajax({//id 길이가 영문자,숫자 6~20자리조건 만족할때
+					type : "POST",
+					url : "idCheck",
+					cache : false,
+					data : {"id":id},
+
+					success : function(data) {//id값 전송 성공
+						if (data == 0) {//id 중복 아닐때
+							$("#id_check").css("visibility", "visible");
+							$("#id_check").text("사용가능한 ID입니다.");
+							$("#id_check").css("color", "green");
+							$("#id").css("border-color", "green");
+						} else {//id 중복일때
+							$("#id_check").text("중복된 ID입니다.");
+							$("#id").css("border-color", "red");
+							$("#id_check").css("visibility", "visible");
+							$("#id_check").css("color", "red");
+							return false;
+						}
+
+					},
+					error : function() {//전송실패
+						alert("error");
 					}
 				});
-				$("#pw").focus(function(){
-					var email = $("#email").val();
-					if(email.length>0){
-						$("#email").css("border-color","green");
-						if(validateEmail(email)){
-							$("#email_alert").css("visibility","hidden");
-						}else{
-							$("#email").css("border-color","red");
-							$("#email_alert").css("visibility","visible");
-							$("#email_alert").css("color","red");
-							
-							}
-						}																		
+			}
+			
+		});
+		$("#email").blur(function(){//이메일이 포커스를 잃었을때	
+			var email = $("#email").val();
+			//email정규식
+			 const emailRegExp=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+			
+			if(email=='' || email == null){//email이 비어있을때
+				$("#email_check").text("-->email을 입력해주세요");
+				$("#email").css("border-color", "red");
+				$("#email_check").css("visibility", "visible");
+				$("#email_check").css("color", "red");
+				return false;
+			}else if(!emailRegExp.test(email)){//이메일이 정규식을 만족 못할때
+				$("#email_check").text("-->올바른 형식의 email을 입력해주세요");
+				$("#email").css("border-color", "red");
+				$("#email_check").css("visibility", "visible");
+				$("#email_check").css("color", "red");
+				return false;
+			}else {//이메일이 정규식을 만족할때
+				$("#email_check").css("visibility", "hidden"); 
+				$("#email").css("border-color", "green");
+				
+			}
+		});
+		
+		$("#pw").blur(function(){
+			var pw = $("#pw").val();
+			//비밀번호체크 정규식
+			const pwRegExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+			if(pw=='' || pw == null){//pw가 비어있을때
+				$("#pw_alert").text("-->비밀번호를 입력해주세요");
+				$("#pw").css("border-color", "red");
+				$("#pw_alert").css("visibility", "visible");
+				$("#pw_alert").css("color", "red");
+				return false;
+			}else if(!pwRegExp.test(pw)){//pw가 정규식을 만족 못할때
+				$("#pw_alert").text("-->8~16자 영문,숫자,특수문자조합");
+				$("#pw").css("border-color", "red");
+				$("#pw_alert").css("visibility", "visible");
+				$("#pw_alert").css("color", "red");
+				return false;
+			}else {//pw가 정규식을 만족할때
+				$("#pw_alert").css("visibility", "hidden"); 
+				$("#pw").css("border-color", "green");
+			}
+		});
+		
+		$("#cpw").blur(function(){
+			var pw = $("#pw").val();
+			var cpw = $("#cpw").val();
+			
+			if(cpw=='' || cpw == null){//cpw가 비어있을때
+				$("#cpw_alert").text("-->비밀번호를 확인해주세요");
+				$("#cpw").css("border-color", "red");
+				$("#cpw_alert").css("visibility", "visible");
+				$("#cpw_alert").css("color", "red");
+				return false;
+			}else if(pw!=cpw){ //비밀번호 불일치
+				$("#cpw_alert").text("-->비밀번호가 일치하지 않습니다.");
+				$("#cpw").css("border-color", "red");
+				$("#cpw_alert").css("visibility", "visible");
+				$("#cpw_alert").css("color", "red");
+				return false;
+			}else {//cpw가 pw와 일치할때
+				$("#cpw_alert").css("visibility", "hidden"); 
+				$("#cpw").css("border-color", "green");
+			}
+		});
+		
+		$("#phone").blur(function(){
+			var phone = $("#phone").val();
+			
+			const phoneRegExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;//폰번호 체크
+			
+			if(phone=='' || phone == null){//phone이 비어있을때
+				$("#phone_alert").text("-->핸드폰번호를 입력해주세요");
+				$("#phone").css("border-color", "red");
+				$("#phone_alert").css("visibility", "visible");
+				$("#phone_alert").css("color", "red");
+				return false;
+			}else if(!phoneRegExp.test(phone)){//phone이 정규식을 만족 못할때
+				$("#phone_alert").text("-->올바른 핸드폰번호를 입력해주세요");
+				$("#phone").css("border-color", "red");
+				$("#phone_alert").css("visibility", "visible");
+				$("#phone_alert").css("color", "red");
+				return false;
+			}else {//phone이 정규식을 만족할때
+				$("#phone_alert").css("visibility", "hidden"); 
+				$("#phone").css("border-color", "green");
+			}
+		});
+		
+		$("#age").blur(function(){
+			var age = $("#age").val();
+			
+			if(age=='' || age == null){//age가 비어있을때
+				$("#age_alert").text("-->나이를 입력해주세요");
+				$("#age").css("border-color", "red");
+				$("#age_alert").css("visibility", "visible");
+				$("#age_alert").css("color", "red");
+				return false;
+			}else if(isNaN(age)){  //나잇값에 문자열이 있을때
+				$("#age_alert").text("-->나이의 숫자만 입력해주세요");
+				$("#age").css("border-color", "red");
+				$("#age_alert").css("visibility", "visible");
+				$("#age_alert").css("color", "red");
+				return false;
+			}else {//age값이 올바르게 들어왔을때
+				$("#age_alert").css("visibility", "hidden"); 
+				$("#age").css("border-color", "green");
+				
+			}
+		});
+
+
+	
+		
+		$("#memberInsert_btn").click(function() {
+			if($("#id_check").text()=="사용가능한 ID입니다."&& 
+					$("#email_check").css("visibility")=="hidden"&&
+					$("#pw_alert").css("visibility")=="hidden"&&
+					$("#phone_alert").css("visibility")=="hidden"&&
+					$("#age_alert").css("visibility")=="hidden"){
+				
+				const id = $("#id").val();
+				const pw = $("#pw").val();
+				const email = $("#email").val();
+				const phone = $("#phone").val();
+				const age = $("#age").val();
+				const gender = $("#gender").val();
+				
+				$.post("memberInsert", { id,pw,email,phone,age,gender }, function(data) {
+					alert(id+"님 회원가입 감사합니다");
+					window.close();
 				});
-				$("#cpw").focus(function(){
-					if($("#pw").val().length>=6){
-						$("#pw").css("border-color","green");
-						$("#pw_alert").css("color","green");
-					}else{
-						$("#pw_alert").css("color","red");
-					}
-				});
-				$(".form_submit_button").click(function(){
-					if($("#pw").val()==$("#cpw").val()){
-						$("#cpw").css("border-color","green");
-						$("#cpw_alert").css("color","green");
-						return true;
-					}else{
-						$("#cpw").focus();
-						return false;
-					}
-				});
-				function validateEmail(email) {
-					var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-					if (filter.test(email)) {
-					return true;
-					}
-					else {
-					return false;
-					}
-					}
-			});				
-	</script>
+			
+			}else{
+				alert("정보를 다시입력해주세요");
+			}
+			
+			
+			
+			
+		});
+
+	});
+</script>
 </head>
 <body>
 	<div class="main_container login_container">
-	<form class="form_container" action="../memberInsert" method="get" >
+
 		<div class="form_title_div">
-		<p class="form_title_p">
-		Register With Us</div>
-		</p>
-		<div class="form_item_name">id</div>
-		<input class="form_input" id="id" name="id">
-		<div class="form_text_alert form_text_alert_padding"></div>
-		
-		<div class="form_item_name">Email</div>
-		<input class="form_input" id="email" name="email">>
-		<div class="form_text_alert form_text_alert_padding email_alert" id="email_alert" >email형식을 확인해주세요</div>
-		
-		<div class="form_item_name">Password</div>
-		<input class="form_input" id="pw" type="password" name="pw">>
-		<div class="form_text_alert form_text_alert_padding" id="pw_alert">Password must be at least 6 characters.</div>
-		
-		<div class="form_item_name">Confirm Password</div>
-		<input class="form_input" type="password" id="cpw">
-		<div class="form_text_alert form_text_alert_padding" id="cpw_alert">Password2 is required.</div>
-		
-		<div class="form_item_name">phone</div>
-		<input class="form_input" id="phone" name="phone">
-		
-		<div class="form_item_name">age</div>
-		<input class="form_input" id="age" name="age">
-		
-		<div class="form_item_name">
-      <label for="gender" >성별을 선택해주세요:</label>
-		<select name="gender" id="gender">
-    		<option value="남" >남</option>
-    		<option value="여" >여</option>
-		</select>
+			<p class="form_title_p">Register With Us</p>
 		</div>
-		
-		<input type="submit" value="Submit" class="form_submit_button">
-	</form>
+
+		<div class="form_container" >
+			<div class="form_item_name">id</div>
+			<input class="form_input" id="id" name="id">
+			<!-- <input
+				type="submit" value="중복확인" id="id_checkBtn"> -->
+			<div class="form_text_alert form_text_alert_padding" id="id_check">
+				>영문자,숫자 6~20자를 입력해주세요</div>
+
+
+			<div class="form_item_name">Email</div>
+			<input class="form_input" id="email" name="email">
+			<div class="form_text_alert form_text_alert_padding email_alert"
+				id="email_check">>email형식을 확인해주세요</div>
+
+			<div class="form_item_name">Password</div>
+			<input class="form_input" id="pw" type="password" name="pw">
+			<div class="form_text_alert form_text_alert_padding" id="pw_alert">>8~16자
+				영문,숫자,특수문자 조합</div>
+
+			<div class="form_item_name">Confirm Password</div>
+			<input class="form_input" type="password" id="cpw">
+			<div class="form_text_alert form_text_alert_padding" id="cpw_alert">비밀번호
+				확인</div>
+
+			<div class="form_item_name">phone</div>
+			<input class="form_input" id="phone" name="phone">
+			<div class="form_text_alert form_text_alert_padding email_alert"
+				id="phone_alert">>ex)01000000000('-'는 빼주세요)</div>
+
+			<div class="form_item_name">age</div>
+			<input class="form_input" id="age" name="age">
+			<div class="form_text_alert form_text_alert_padding email_alert"
+				id="age_alert">>나이를 입력해주세요</div>
+
+			<div class="form_item_name">
+				<label for="gender">성별을 선택해주세요:</label> <select name="gender"
+					id="gender">
+					<option value="남">남</option>
+					<option value="여">여</option>
+				</select>
+			</div>
+			<input type="submit" value="회원가입" id="memberInsert_btn" class="form_submit_button">
+		</div>
+
 	</div>
-	
+
 </body>
 </html>

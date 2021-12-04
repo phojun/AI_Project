@@ -46,6 +46,71 @@ $(document).ready(function(){
 				alert("컬러입력하세요");
 			}
 		});
+			$("#fileUploadBtn").click(function(){
+		let formData = new FormData();
+		formData.append('image', $("#file")[0].files[0]);
+		
+		$.ajax({
+			type : 'post',
+			url : '../personDetect',
+			cache : false,
+			data : formData,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				data=JSON.parse(data);
+				if(data.result){
+					alert(data.result);
+				}else{
+					alert("data.result없음");
+				}
+			}
+			
+		});
+	});
+		$("#faceDetectBtn").click(function(){
+		let formData = new FormData();
+		formData.append('image', $("#file")[0].files[0]);
+		
+		$.ajax({
+			type : 'post',
+			url : '../objectDetect',
+			cache : false,
+			data : formData,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				data=JSON.parse(data);
+				$("#drawCanvas").attr('width',data.width+'px');
+				$("#drawCanvas").attr('height',data.height+'px');
+				$("#drawCanvas").attr('style',"border: 1px solid #993300");
+				const canvas=document.getElementById("drawCanvas");
+				const context=canvas.getContext("2d");
+				const image=new Image();
+				
+				image.src='../media/upload.png';
+				
+				image.onload=function(){
+					context.drawImage(image,0,0);
+					context.strokeStyle = 'yellow';
+					context.lineWidth = 3;
+					
+					
+						const x=(data.faces[0].roi.x)	
+						const y=(data.faces[0].roi.y)
+										
+						const width=(data.faces[0].roi.width)	
+						const height=(data.faces[0].roi.height)
+						
+					
+						console.log(x,y,width,height);
+					
+						context.strokeRect(x,y,width,height);
+					}
+				}	
+				
+			});
+		});
 	
 	
 });

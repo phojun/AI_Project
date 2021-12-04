@@ -20,4 +20,9 @@ public class MemberService {
 	public MemberVO login(MemberVO memberVO)  throws DataAccessException{
 		return memberDAO.login(memberVO);
 	}
+	public int idCheck(String id) {
+		
+		return memberDAO.idCheck(id);
+	}
+
 }

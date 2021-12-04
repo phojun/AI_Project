@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-error 발생
+	${memberVO.getId() }님 가입되셨습니다
 </body>
 </html>

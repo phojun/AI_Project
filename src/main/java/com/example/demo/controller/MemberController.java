@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,8 +20,14 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
+	@PostMapping("idCheck")
+	@ResponseBody
+	public int idCheck(@RequestParam("id") String id) {
+		System.out.println(id);
+		return memberService.idCheck(id);
+	}
 	@RequestMapping("memberInsert")
-	public void memberInsert(MemberVO memberVO) {
+	public String memberInsert(MemberVO memberVO) {
 		System.out.println(memberVO);
 		
 		if(memberVO.getId() ==null || memberVO.getId().equals("") || 
@@ -29,16 +36,17 @@ public class MemberController {
 			|| memberVO.getGender()==null || memberVO.getGender().equals("")){
 			System.out.println("error");
 
-			
 		}
 		
 		
 		try {
 			memberService.memberInsert(memberVO);
 			System.out.println("memberInsert");
+			return "memberInsertOk";
 			
 		}catch(DataAccessException e) {
 			System.out.println(e);
+			return "error";
 		}
 	}
 	
