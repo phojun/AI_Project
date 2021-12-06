@@ -111,6 +111,25 @@ $(document).ready(function(){
 				
 			});
 		});
+		$("#selectAllTypeBtn").click(function(){
+			alert();
+			$.post('selectAllType',{},function(data){
+				
+			});
+		});
+		$("#getPcolorBtn").click(function(){
+			
+			$.post('getPcolor',{},function(data){
+				data = JSON.parse(data);
+				
+				if(data.pColor){
+					alert(data.pColor);
+					
+				}else if(data.msg){
+					alert(data.msg);
+				}
+			});
+		});
 	
 	
 });

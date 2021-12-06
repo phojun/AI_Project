@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,12 @@ public class ColorTestService {
 	@Autowired
 	ColorTestDAO colorTestDAO;
 	
-	public String selectPeronalType(ColorTestVO colorTestVO) throws Exception {
-		return colorTestDAO.selectPeronalType(colorTestVO);
+	public String selectPeronalType(int no) throws Exception {
+		return colorTestDAO.selectPeronalType(no);
+
+	}
+	public List<ColorTestVO> selectAllType() throws Exception {
+		return colorTestDAO.selectAllType();
 
 	}
 }

@@ -8,7 +8,11 @@
 	
 	
 	
-	<select id="selectPeronalType"  resultType="String" parameterType="ColorTestVO">
+	<select id="selectPeronalType"  resultType="String" parameterType="int">
 		select personaltype from personalcolor where no=#{no}
+	</select>
+	
+	<select id="selectAllType"  resultType="ColorTestVO" >
+		select * from personalcolor
 	</select>
 </mapper>

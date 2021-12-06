@@ -20,7 +20,7 @@ import com.example.demo.vo.ColorTestVO;
 @Service
 public class Example {
 		ColorTestVO colorTestVO;
-    public ColorTestVO getColor() {
+    public int[] getColor() {
     	JSONObject jo1 = new JSONObject();
     	int[] a = new int[3];
     	
@@ -114,19 +114,19 @@ public class Example {
             		  a[0] += color.getRed() + color1.getRed();
             		  a[1] += color.getGreen()+color1.getGreen();
             		  a[2] += color.getBlue()+color1.getBlue();
-            		  System.out.println("x1:"+x1+","+"y1:"+y1);
-            		  System.out.println("x2:"+x2+","+"y2:"+y2);
-            		  System.out.println(color.getRed()+","+color.getGreen()+","+color.getBlue());
-            		  System.out.println(color1.getRed()+","+color1.getGreen()+","+color1.getBlue());
+//            		  System.out.println("x1:"+x1+","+"y1:"+y1);
+//            		  System.out.println("x2:"+x2+","+"y2:"+y2);
+//            		  System.out.println(color.getRed()+","+color.getGreen()+","+color.getBlue());
+//            		  System.out.println(color1.getRed()+","+color1.getGreen()+","+color1.getBlue());
             	  }
               }
 
-           
-           
-            System.out.println("result : "+a[0]/18+","+a[1]/18+","+a[2]/18);
-            colorTestVO.setBlue(a[2]);
-    		colorTestVO.setGreen(a[1]);
-    		colorTestVO.setRed(a[0]);
+           a[0] /= 18;
+           a[1] /= 18;
+           a[2] /= 18;
+            System.out.println("result : "+a[0]+","+a[1]+","+a[2]);
+            
+    		
     		//jo1.put("colorTestVO",colorTestVO);
             
             
@@ -139,6 +139,7 @@ public class Example {
             System.out.println(e);
            // jo1.put("msg", e);
         }
-        return colorTestVO;
+        System.out.println(colorTestVO);
+        return a;
     }
 }
