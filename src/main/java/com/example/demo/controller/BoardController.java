@@ -51,7 +51,7 @@ public class BoardController {
 		if(!fileName.equals("")) {
 			boardVO.setFileName(fileName);
 			try {
-				file.transferTo(new File("C:\\0AI\\5_backend\\springBoot_workspace\\Day1103_01\\src\\main\\webapp\\uploadImg\\"+fileName));
+				file.transferTo(new File("C:\\0AI\\5_backend\\springBoot_workspace\\FinalProject_4\\src\\main\\webapp\\uploadImg\\"+fileName));
 			} catch (IllegalStateException | IOException e) {
 				
 				e.printStackTrace();

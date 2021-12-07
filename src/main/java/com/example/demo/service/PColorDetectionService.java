@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.awt.Color;
 
 import javax.imageio.ImageIO;
@@ -18,9 +20,9 @@ import com.example.demo.vo.ColorTestVO;
 
 // 네이버 얼굴인식 API 예제
 @Service
-public class Example {
+public class PColorDetectionService {
 		ColorTestVO colorTestVO;
-    public int[] getColor() {
+    public int[] getColor(File uploadFile) {
     	JSONObject jo1 = new JSONObject();
     	int[] a = new int[3];
     	
@@ -30,10 +32,8 @@ public class Example {
         String clientSecret = "JXTKc5OX3vBneS31NxblU5amf3RlYcOSVXcIxZBM";//애플리케이션 클라이언트 시크릿값";
 
         try {
+        	Files.copy(uploadFile.toPath(), new File("src\\main\\webapp\\media\\upload.png").toPath(),StandardCopyOption.REPLACE_EXISTING );
             String paramName = "image"; // 파라미터명은 image로 지정
-            String imgFile = "c:\\temp\\me3.png";
-            File uploadFile = new File(imgFile);
-        
             
             String apiURL = "https://naveropenapi.apigw.ntruss.com/vision/v1/face"; // 얼굴 감지
             URL url = new URL(apiURL);
@@ -82,7 +82,7 @@ public class Example {
                     response.append(inputLine);
                 }
                 br.close();
-                System.out.println(response.toString());
+//                System.out.println(response.toString());
                 
                JSONObject jo=new JSONObject(response.toString());
                JSONArray ja= (JSONArray) jo.get("faces");
@@ -95,7 +95,7 @@ public class Example {
               int x2 =(((int)((JSONObject) jo3.get("rightEye")).get("x"))+((int) ((JSONObject)jo3.get("rightMouth")).get("x")))/2;
               int y2=(((int)((JSONObject) jo3.get("rightEye")).get("y"))+((int) ((JSONObject)jo3.get("rightMouth")).get("y")))/2;
               
-               System.out.println(jo3.toString());
+//               System.out.println(jo3.toString());
                JSONObject jo4=(JSONObject) jo3.get("nose");
               
              // JSONObject jo5=new JSONObject();
@@ -124,7 +124,7 @@ public class Example {
            a[0] /= 18;
            a[1] /= 18;
            a[2] /= 18;
-            System.out.println("result : "+a[0]+","+a[1]+","+a[2]);
+//            System.out.println("result : "+a[0]+","+a[1]+","+a[2]);
             
     		
     		//jo1.put("colorTestVO",colorTestVO);
@@ -139,7 +139,7 @@ public class Example {
             System.out.println(e);
            // jo1.put("msg", e);
         }
-        System.out.println(colorTestVO);
+//        System.out.println(colorTestVO);
         return a;
     }
 }

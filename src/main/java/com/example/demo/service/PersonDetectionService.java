@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 // Object Detection API 예제
-public class ObjectDetection {
+public class PersonDetectionService {
 
     public String detectPerson(File file) {
 
@@ -29,7 +29,7 @@ public class ObjectDetection {
 
             String paramName = "image"; // 파라미터명은 image로 지정
             String imgFile = file.getPath();
-            System.out.println(imgFile);
+//            System.out.println(imgFile);
             File uploadFile = new File(imgFile);
             String apiURL = "https://naveropenapi.apigw.ntruss.com/vision-obj/v1/detect"; // 객체 인식
             URL url = new URL(apiURL);
@@ -78,7 +78,7 @@ public class ObjectDetection {
                     response.append(inputLine);
                 }
                 br.close();
-                System.out.println(response.toString());
+//                System.out.println(response.toString());
                 JSONObject jo = new JSONObject(response.toString());
 //                JSONObject jo1 = new JSONObject(response.toString());
 //                System.out.println(jo1.toString());
@@ -90,15 +90,15 @@ public class ObjectDetection {
                 
                 
                 BufferedImage bimg = ImageIO.read(uploadFile); 
-                System.out.println(response.toString());
+//                System.out.println(response.toString());
                 jo = new JSONObject(response.toString());
-                System.out.println(jo.toString());
+//                System.out.println(jo.toString());
                 JSONArray ja = (JSONArray)jo.get("predictions");
                 jo = (JSONObject)ja.get(0);
                 ja = (JSONArray)jo.get("detection_names");
-                System.out.println(ja.toString());
+//                System.out.println(ja.toString());
                 String result = ja.toString();
-                System.out.println(result);
+//                System.out.println(result);
                 if(result.contains("person")) {
                 	return "사람탐지";
                 }else {
@@ -110,7 +110,7 @@ public class ObjectDetection {
                 return "error";
             }
         } catch (Exception e) {
-            System.out.println(e);
+//            System.out.println(e);
             return e.getMessage();
         }
 		

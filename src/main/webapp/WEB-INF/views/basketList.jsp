@@ -8,6 +8,35 @@
 <head>
 <meta charset="UTF-8">
 <title>장바구니</title>
+<script type="text/javascript">
+function a(url){
+	const id=getCookie("id");
+	if(id){
+		location.href=url;
+	}else{
+	    alert("로그인 후 이용 가능합니다.")
+	    window.close();
+
+	}
+	
+}
+function getCookie(cname) {
+	  let name = cname + "=";
+	  let decodedCookie = decodeURIComponent(window.opener.document.cookie);
+	  let ca = decodedCookie.split(';');
+	  for(let i = 0; i <ca.length; i++) {
+	    let c = ca[i];
+	    while (c.charAt(0) == ' ') {
+	      c = c.substring(1);
+	    }
+	    if (c.indexOf(name) == 0) {
+	      return c.substring(name.length, c.length);
+	    }
+	  }
+	  return "";
+	}
+</script>
+
 </head>
 <body>
 	<%
