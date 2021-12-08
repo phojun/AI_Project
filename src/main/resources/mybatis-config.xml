@@ -8,6 +8,7 @@
 		<mapper resource="mybatis/mappers/member.xml"/>
 		<mapper resource="mybatis/mappers/board.xml"/>
 		<mapper resource="mybatis/mappers/colorBox.xml"/>
+		<mapper resource="mybatis/mappers/colorTest.xml"/>
 		
 	</mappers>
 </configuration>  

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.math.BigDecimal;
@@ -21,7 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class ObjectDetectionService {
 
     public  String objectDetect(File uploadFile) {
-    	
+    	JSONObject jo1 = new JSONObject();
+    	int[] a = new int[3];
     	
         StringBuffer reqStr = new StringBuffer();
         String clientId = "s9vnr4drhx";//애플리케이션 클라이언트 아이디값";
@@ -30,7 +32,7 @@ public class ObjectDetectionService {
         try {
         	Files.copy(uploadFile.toPath(), new File("src\\main\\webapp\\media\\upload.png").toPath(),StandardCopyOption.REPLACE_EXISTING );
             String paramName = "image"; // 파라미터명은 image로 지정
-            String imgFile = "D:\\temp\\smile.jpg";
+           //String imgFile = "D:\\temp\\smile.jpg";
            // File uploadFile = new File(imgFile);
             String apiURL = "https://naveropenapi.apigw.ntruss.com/vision/v1/face"; // 얼굴 감지
             URL url = new URL(apiURL);
@@ -69,7 +71,7 @@ public class ObjectDetectionService {
             if(responseCode==200) { // 정상 호출
                 br = new BufferedReader(new InputStreamReader(con.getInputStream()));
             } else {  // 오류 발생
-                System.out.println("error!!!!!!! responseCode= " + responseCode);
+//                System.out.println("error!!!!!!! responseCode= " + responseCode);
                 br = new BufferedReader(new InputStreamReader(con.getInputStream()));
             }
             String inputLine;
@@ -79,7 +81,7 @@ public class ObjectDetectionService {
                     response.append(inputLine);
                 }
                 br.close();
-                System.out.println(response.toString());
+//                System.out.println(response.toString());
                 
 				BufferedImage bimg = ImageIO.read(uploadFile); 
 				int width = bimg.getWidth();
@@ -89,11 +91,10 @@ public class ObjectDetectionService {
                 jo.put("width", width);
                 jo.put("height", height);
                 
-				
                 return jo.toString();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             
         }
     	return null;

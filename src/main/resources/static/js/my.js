@@ -34,21 +34,34 @@ $(document).ready(function() {
 			}
 		});
 	});
-	$(document).on('click', "#colorInsertBtn", function() {
-		const pColor = $("#colorText").val();
-		if (pColor) {
-			$.post('../insertColorBox', { id, pColor }, function(data) {
-				if (data.msg) {
-					alert(data.msg);
-				}
+
+	$(document).on('click',"#colorInsertBtn",function(){
+			const pColor=$("#colorText").val();
+			if(pColor){
+				$.post('../insertColorBox',{id,pColor},function(data){
+					if(data.msg){
+						alert(data.msg);
+					}
+				});
+			}else{
+				alert("컬러입력하세요");
+			}
+		});
+	$("#basketBtn").click(function(){
+		const id = $.cookie("id");
+		if(id){
+			$.post("../basketList",{id},function(){
+				window.open("basketList");
 			});
-		} else {
-			alert("컬러입력하세요");
+		}else{
+			alert("로그인 해야 이용 가능합니다.");
 		}
 	});
-	$("#fileUploadBtn").click(function() {
-		let formData = new FormData();
-		formData.append('image', $("#file")[0].files[0]);
+		
+	$("#fileUploadBtn").click(function(){
+	let formData = new FormData();
+	formData.append('image', $("#file")[0].files[0]);
+		
 
 		$.ajax({
 			type: 'post',
@@ -176,7 +189,33 @@ $(document).ready(function() {
 			}
 
 		});
+
 	});
 
 
+		$("#getPcolorBtn").click(function(){
+		let formData = new FormData();
+		formData.append('image', $("#file")[0].files[0]);
+		
+		$.ajax({
+			type : 'post',
+			url : '../getPcolor',
+			cache : false,
+			data : formData,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				data=JSON.parse(data);
+				if(data.pColor){
+					alert(data.pColor);
+				}else if(data.msg){
+					alert(data.msg);
+				}else{
+					alert("data없음")
+				}
+			}
+			
+		});
+	});
+		
 });

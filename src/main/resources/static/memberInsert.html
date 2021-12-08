@@ -72,11 +72,11 @@ main_container {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		
+		$(".form_text_alert").css("visibility", "hidden");
 		$("#id").blur(function() {
 			const id = $("#id").val();
 			const idRegExp = /^[a-zA-z0-9]{6,20}$/;
-			
+				
 			if(id==null||id==""){//id 값이 없을때
 				$("#id_check").text("-->id를 입력해주세요");
 				$("#id_check").css("visibility", "visible");
@@ -276,18 +276,18 @@ main_container {
 			<input class="form_input" id="id" name="id">
 			<!-- <input
 				type="submit" value="중복확인" id="id_checkBtn"> -->
-			<div class="form_text_alert form_text_alert_padding" id="id_check">
-				>영문자,숫자 6~20자를 입력해주세요</div>
+			<div class="form_text_alert form_text_alert_padding" id="id_check" >
+				영문자,숫자 6~20자를 입력해주세요</div>
 
 
 			<div class="form_item_name">Email</div>
 			<input class="form_input" id="email" name="email">
 			<div class="form_text_alert form_text_alert_padding email_alert"
-				id="email_check">>email형식을 확인해주세요</div>
+				id="email_check">email형식을 확인해주세요</div>
 
 			<div class="form_item_name">Password</div>
 			<input class="form_input" id="pw" type="password" name="pw">
-			<div class="form_text_alert form_text_alert_padding" id="pw_alert">>8~16자
+			<div class="form_text_alert form_text_alert_padding" id="pw_alert">8~16자
 				영문,숫자,특수문자 조합</div>
 
 			<div class="form_item_name">Confirm Password</div>
@@ -298,12 +298,12 @@ main_container {
 			<div class="form_item_name">phone</div>
 			<input class="form_input" id="phone" name="phone">
 			<div class="form_text_alert form_text_alert_padding email_alert"
-				id="phone_alert">>ex)01000000000('-'는 빼주세요)</div>
+				id="phone_alert">ex)01000000000('-'는 빼주세요)</div>
 
 			<div class="form_item_name">age</div>
 			<input class="form_input" id="age" name="age">
 			<div class="form_text_alert form_text_alert_padding email_alert"
-				id="age_alert">>나이를 입력해주세요</div>
+				id="age_alert">나이를 입력해주세요</div>
 
 			<div class="form_item_name">
 				<label for="gender">성별을 선택해주세요:</label> <select name="gender"
