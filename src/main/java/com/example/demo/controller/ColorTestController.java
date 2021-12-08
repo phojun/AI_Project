@@ -48,6 +48,7 @@ public class ColorTestController {
 			image.transferTo(uploadFile);
 			
 			jo.put("result", personDetectionService.detectPerson(uploadFile));
+			
 //			System.out.println(jo.get("result"));
 			return jo.toString();
 			
@@ -83,7 +84,7 @@ public class ColorTestController {
 		int no = 0, sum=0, temp = 1000;
 		int [] a = new int[3];
 		JSONObject jo = new JSONObject();
-		
+		///home/ubuntu/0csh/git_registry/test-1/media
 		
 		File uploadFile=new File("C:\\temp2\\"+image.getOriginalFilename());
 		try {

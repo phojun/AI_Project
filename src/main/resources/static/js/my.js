@@ -83,6 +83,7 @@ $(document).ready(function(){
 		let formData = new FormData();
 		formData.append('image', $("#file")[0].files[0]);
 		
+		
 		$.ajax({
 			type : 'post',
 			url : '../objectDetect',
