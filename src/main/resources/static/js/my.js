@@ -140,7 +140,7 @@ $(document).ready(function() {
 						context.drawImage(image, 0, 0);
 					}
 
-					var jsonArray = new Array();   
+					var jsonArray = new Array();    
 					if (data.info.faceCount > 0) {
 						let faces = data.info.faceCount;
 						for (let i = 0; i < faces; i++) {
