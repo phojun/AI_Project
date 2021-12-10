@@ -155,16 +155,24 @@ $(document).ready(function() {
 						console.log(jsonArray);
 						for (let i = 0; i < jsonArray.length; i++) {
 							var result = jsonArray[i].celebrity + "을(를) " + jsonArray[i].confidence + "정도 닮았습니다.<br>";
-							console.log(result);
+							//console.log(result);
 							$("#resultDiv").append(result);
 						}
+
+						var celebrity = data.faces[0].celebrity.value;
+						//console.log(celebrity);
+						$.post('../celeImg', { celebrity }, function() {
+							console.log(data);
+							$("#celeImg").attr("src","../media/newCele.png");
+						});
 
 					} else {
 						$("#resultDiv").text("닮은꼴 연예인이 없네요 ㅠㅠ");
 					}
-				}else if(data.info.faceCount>1){
+
+				} else if (data.info.faceCount > 1) {
 					alert("얼굴이 2개이상 검출되었습니다 한개의 얼굴만 들어간 사진을 넣어주세요~");
-				}else{
+				} else {
 					alert("얼굴이 검출되지 않았습니다 사진을 다시한번 확인해 주세요");
 				}
 
