@@ -186,7 +186,7 @@ public class CelebrityDetectionService {
             }else{ //설정값 (비율무시)
  
                 w = newWidth;
-                h = newHeight;    
+                h = newHeight;     
             }
             // 이미지 리사이즈
             // Image.SCALE_DEFAULT : 기본 이미지 스케일링 알고리즘 사용
