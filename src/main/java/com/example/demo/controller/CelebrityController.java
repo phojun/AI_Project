@@ -58,7 +58,7 @@ public class CelebrityController {
 		Document doc;
 		ArrayList<String> imgURL=new ArrayList<String>();
 		
-		try {
+		try { 
 			doc = con.get();
 			Elements imgs=doc.getElementsByClass("yWs4tf"); 
 			System.out.println(imgs.size());
