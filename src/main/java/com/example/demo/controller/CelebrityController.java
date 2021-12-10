@@ -60,7 +60,7 @@ public class CelebrityController {
 		
 		try {
 			doc = con.get();
-			Elements imgs=doc.getElementsByClass("yWs4tf");
+			Elements imgs=doc.getElementsByClass("yWs4tf"); 
 			System.out.println(imgs.size());
 			for (Element element : imgs) {
 	            String url = element.attr("src");
